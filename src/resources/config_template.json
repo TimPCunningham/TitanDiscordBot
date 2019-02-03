@@ -1,0 +1,13 @@
+{
+    "discord" :{
+        "token": "token",
+        "prefix": "!"
+    },
+    "spotify": {
+        "client_id": "client_id",
+        "client_secret": "client_secret"
+    },
+    "youtube": {
+        "token": "token"
+    }
+}
