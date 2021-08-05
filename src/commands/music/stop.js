@@ -1,4 +1,5 @@
 const youtube = require('../../resources/youtube');
+const msgUtil = require('../../resources/messageUtils');
 
 module.exports = {
     command: 'stop',
@@ -9,9 +10,10 @@ module.exports = {
     execute: (message, server, args) => {
         if(server.dispatcher) {
             server.playlist.stopping = true;
+            server.playlist.lastSong = null;
             youtube.stop(server, message);
         } else {
-            message.reply('Im not current playing any songs!');
+            msgUtil.reply(message, 'Im not current playing any songs!');
         }
         return true;
     }

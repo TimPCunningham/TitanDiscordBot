@@ -1,4 +1,5 @@
 const youtube = require('../../resources/youtube');
+const msgUtil = require('../../resources/messageUtils');
 const outof = 10;
 
 module.exports = {
@@ -12,23 +13,25 @@ module.exports = {
         let num2 = Math.floor(Math.random() * outof);
         let channel = message.channel;
 
-        channel.send(`Ok, I'll pick two numbers, If they match I'll play George Ezra - Shotgun!`);
-        setTimeout(()=> {
-            if(num1 == num2) {
-                channel.send(`${num1} and ${num2}!!!! TIME FOR GEORGE EZRA - SHOTGUN!`);
-                if(message.member.voiceChannel) {
+        msgUtil.send(channel, `Ok, I'll pick two numbers, If they match I'll play George Ezra - Shotgun!`);
+        setTimeout(() => {
+            if (num1 == num2) {
+                msgUtil.send(channel, `${num1} and ${num2}!!!! TIME FOR GEORGE EZRA - SHOTGUN!`);
+                if (message.member.voiceChannel) {
                     let voiceChannel = message.member.voiceChannel;
 
                     voiceChannel.join()
-                    .then(connection => {
-                        server.playlist.currentSong = `Shotgun by George fricken Ezra`;
-                        youtube.play(server, connection, 'v_B3qkp4nO4', () => youtube.stop(server, message));
-                    });
+                        .then(connection => {
+                            server.playlist.currentSong = `Shotgun by George fricken Ezra`;
+                            youtube.play(server, message, connection, 'v_B3qkp4nO4', () => youtube.stop(server, message));
+                        }).catch(reason => {
+                            console.log(reason);
+                        });
                 } else {
-                    message.send(`${num1} and ${num2}!! But you aren't in a voice channel :( Maybe next time.`);
+                    msgUtil.reply(message, `But you aren't in a voice channel :( Maybe next time.`);
                 }
             } else {
-                channel.send(`${num1} and ${num2}, better luck next time :(`);
+                msgUtil.send(message.channel, `${num1} and ${num2}, better luck next time :(`);
             }
         }, 1000);
 

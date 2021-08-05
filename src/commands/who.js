@@ -1,11 +1,11 @@
 const youtube = require('../resources/youtube');
 const msgUtil = require('../resources/messageUtils');
-const videoID = '6n3pFFPSlW4';
+const videoID = 'om8kV_2MoFY';
 
 module.exports = {
-    command: 'gnomed',
-    usage: 'gnomed',
-    description: "You've been gnomed!",
+    command: 'who',
+    usage: 'who',
+    description: "I dont know who this man is",
     voiceOnly: true,
     guildOnly: true,
     execute: (message, server, args) => { 
@@ -15,7 +15,6 @@ module.exports = {
             youtube.play(server, message, connection, videoID, (s, m, c) => {
                 youtube.stop();
             });
-            msgUtil.send(message.channel, 'https://i.kym-cdn.com/entries/icons/original/000/025/526/gnome.jpg');
         })
         .catch(console.log);
         return true;

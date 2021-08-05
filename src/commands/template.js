@@ -5,6 +5,5 @@ module.exports = {
     voiceOnly: false,
     guildOnly: true,
     execute: (message, server, args) => {
-        
     }
 };

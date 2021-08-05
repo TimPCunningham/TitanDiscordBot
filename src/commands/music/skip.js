@@ -1,3 +1,5 @@
+const msgUtil = require('../../resources/messageUtils');
+
 module.exports = {
     command: 'skip',
     usage: 'skip',
@@ -6,10 +8,10 @@ module.exports = {
     guildOnly: true,
     execute: (message, server, args) => {
         if(server.dispatcher && server.playlist.currentSong) {
-            message.reply(`Skipped '**${server.playlist.currentSong}**'!`)
+            msgUtil.reply(message, `Skipped '**${server.playlist.currentSong}**'!`);
             server.dispatcher.end();
         } else {
-            message.repl('No songs are currently playing!');
+            msgUtil.reply(message, 'No songs are currently playing!');
         }
         return true;
     }

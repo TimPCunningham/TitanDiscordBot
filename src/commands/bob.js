@@ -1,5 +1,6 @@
 const spotify = require('../resources/spotify');
 const youtube = require('../resources/youtube');
+const msgUtil = require('../resources/messageUtils');
 
 module.exports = {
     command: 'bob',
@@ -8,7 +9,7 @@ module.exports = {
     voiceOnly: false,
     guildOnly: false,
     execute: (message, server, args) => {
-        message.channel.send('**OwO _I has B.O.B_**');
+        msgUtil.send(message.channel, '**OwO _I has B.O.B_**');
         return true;
     }
 };

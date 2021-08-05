@@ -1,4 +1,5 @@
 const youtube = require('../../resources/youtube');
+const msgUtil = require('../../resources/messageUtils');
 
 module.exports = {
     command: 'pause',
@@ -12,10 +13,10 @@ module.exports = {
                 server.playlist.paused = true;
                 youtube.pause(server, message);
             } else {
-                message.reply('There are no songs playing!');
+                msgUtil.reply(message, 'There are no songs playing!');
             }
         } else {
-            message.reply('I am not playing any music!');
+            msgUtil.reply(message, 'I am not playing any music!');
         }
         return true;
     }

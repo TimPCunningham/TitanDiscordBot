@@ -1,4 +1,5 @@
 const https = require('https');
+const msgUtil = require('../resources/messageUtils');
 const gistID = '961c3be9b11ec570de7ad4480c334c58';
 const fileName = 'Tim Says';
 
@@ -32,15 +33,15 @@ module.exports = {
                     if(!isNaN(args[0])) {
                         let index = Number.parseInt(args[0]);
                         if(index <= sayings.length && index >= 1) {
-                            message.channel.send(`_**${sayings[index-1]}**_`);
+                            msgUtil.send(message.channel, `_**${sayings[index-1]}**_`);
                         } else {
-                            message.reply(`I'm not finding that quote!`);
+                            msgUtil.reply(message, `I'm not finding that quote!`);
                         }
                     } else {
-                        message.reply(`that doesn't seem to be a number.`);
+                        msgUtil.reply(message, `that doesn't seem to be a number.`);
                     }
                  } else {
-                    message.channel.send(`_**${sayings[Math.floor(Math.random() * sayings.length)]}**_`);
+                    msgUtil.send(message.channel, `_**${sayings[Math.floor(Math.random() * sayings.length)]}**_`);
                 }
             });
         }).end;

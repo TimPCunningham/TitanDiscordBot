@@ -1,4 +1,5 @@
 const youtube = require('../../resources/youtube');
+const msgUtil = require('../../resources/messageUtils');
 
 module.exports = {
     command: 'shuffle',
@@ -9,7 +10,7 @@ module.exports = {
     execute: (message, server, args) => {
 
         if(server.playlist.tracks.length == 0) {
-            message.reply('No playlist has been set yet!');
+            msgUtil.reply(message, 'No playlist has been set yet!');
             return true;
         }
 
@@ -18,7 +19,7 @@ module.exports = {
         .then(connection => {
             playSong(server, message, connection);
         })
-        .catch(console.log);
+        .catch(msgUtil.log);
 
         return true;
     }
@@ -34,13 +35,23 @@ function playSong(server, message, connection) {
         return;
     }
 
-    let song = randomSong(server.playlist.tracks);
+    let song;
+    
+    do {
+        song = randomSong(server.playlist.tracks);
+    } while(server.playlist.lastSong && song.name == server.playlist.lastSong && server.playlist.tracks.length > 1);
     server.playlist.currentSong = song.name;
+    server.playlist.lastSong = song.name;
 
     if(song.id) {
         youtube.play(server, message, connection, song.id, playSong);
     } else {
-        youtube.getVideoID(song.name, (id, videoName) => {
+        youtube.getVideoID(song.name, (id, videoName, success) => {
+            if(!success) {
+                msgUtil.reply(message, `I could't find ${song.name}!`);
+                youtube.stop();
+                return;
+            }
             song.id = id;
             youtube.play(server, message, connection, id, playSong);
         });

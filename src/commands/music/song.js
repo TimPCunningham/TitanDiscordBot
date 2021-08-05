@@ -1,3 +1,5 @@
+const msgUtil = require('../../resources/messageUtils');
+
 module.exports = {
     command: 'song',
     usage: 'song',
@@ -6,7 +8,7 @@ module.exports = {
     guildOnly: true,
     execute: (message, server, args) => {
         if(server.playlist.currentSong) {
-            message.reply(`'**${server.playlist.currentSong}**' is currently playing.`);
+            msgUtil.reply(message, `'**${server.playlist.currentSong}**' is currently playing.`);
         }
         return true;
     }
